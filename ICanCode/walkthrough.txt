@@ -1,0 +1,27 @@
+function program(robot){
+var scanner = robot.getScanner();
+var dest = scanner.getGold();
+if (dest.length === 0){
+dest = scanner.getExit();
+}
+var to = scanner.getShortestWay(dest[0]);
+var from = scanner.getMe();
+robot.goOverHole = function (direction){
+if (scanner.at(direction) != "HOLE"){
+robot.go(direction);    
+}else{
+robot.jump(direction);    
+}
+};
+var dx = to.getX() - from.getX(); 
+var dy = to.getY() - from.getY(); 
+if (dx > 0){
+robot.goOverHole("RIGHT");
+}else if (dx < 0){
+robot.goOverHole("LEFT");
+}else if(dy > 0){
+robot.goOverHole("DOWN");
+}else if (dy < 0){
+robot.goOverHole("UP");
+}
+}

@@ -9,23 +9,23 @@ import com.epam.yuri_karpov.icancode.GameTest;
 
 public class ScreenShotListener implements ITestListener {
 
+	@SuppressWarnings("unused")
 	private void screenMake(ITestResult result) {
 		Object inst = result.getInstance();
 
 		if (inst == null) {
 			return;
 		}
-		if(!(inst instanceof GameTest)){
+		if (!(inst instanceof GameTest)) {
 			return;
 		}
 		GameTest gameTest = (GameTest) inst;
-		WebDriver driver = gameTest.getDriver();		
-		
-		if (driver!=null){
+		WebDriver driver = gameTest.getDriver();
+
+		if (driver != null) {
 			ScreenShot.make(driver, "AutoScreenShot");
 		}
-		
-		
+
 	}
 
 	@Override

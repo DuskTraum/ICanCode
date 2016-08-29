@@ -4,11 +4,11 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 import org.testng.Reporter;
 
-public class ReportingAppender extends AppenderSkeleton{
+public class ReportingAppender extends AppenderSkeleton {
 
 	@Override
 	public void close() {
-		
+
 	}
 
 	@Override

@@ -21,14 +21,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 public class GamePage {
+	private static final String THE_CURRENT_FIRST_LEVEL = "//li[@class='training level-current' and @level ='1']";
 	private PhantomJSDriver driver;
 	private static final Logger LOG = Logger.getLogger(GamePage.class);
 
 	@FindBy(xpath = "//li[@level ='1']")
-	private WebElement firstLvlBtn;
+	private WebElement firstLvlButton;
 
 	@FindBy(xpath = "//a[@class='mCSB_buttonLeft']")
-	private WebElement leftLevelScrollBtn;
+	private WebElement leftLevelScrollButton;
 
 	@FindBy(xpath = "//div[@class='ace_line'][1]")
 	private WebElement ideField;
@@ -37,13 +38,16 @@ public class GamePage {
 	private WebElement field;
 
 	@FindBy(id = "ide-commit")
-	private WebElement commitBtn;
+	private WebElement commitButton;
 
 	@FindBy(xpath = "//a[@id='register-link']")
-	private WebElement logOutBtn;
+	private WebElement logOutButton;
 
 	@FindBy(xpath = "//pre//textarea")
 	private WebElement textField;
+
+	@FindBy(xpath = "//li[@level ='1']")
+	private WebElement firstLevel;
 
 	public GamePage(PhantomJSDriver driver) {
 		this.driver = driver;
@@ -53,33 +57,41 @@ public class GamePage {
 	public void passLevel() {
 		LOG.info("start 'passLevel'");
 		FluentWait<PhantomJSDriver> wait = new FluentWait<PhantomJSDriver>(driver).withTimeout(120, TimeUnit.SECONDS)
-				.pollingEvery(3, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
-		wait.until(ExpectedConditions.elementToBeClickable(commitBtn));
-		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-		jsExecutor.executeScript("arguments[0].click();", commitBtn);
+		                                                                          .pollingEvery(3, TimeUnit.SECONDS)
+		                                                                          .ignoring(
+		                                                                                  NoSuchElementException.class);
+		wait.until(ExpectedConditions.elementToBeClickable(commitButton));
+		JavascriptExecutor jsExecutor = driver;
+		jsExecutor.executeScript("arguments[0].click();", commitButton);
 
 		LOG.info("finish 'passLevel'");
 	}
 
 	public void setFirstLevel() {
 		LOG.info("start 'setFirstLevel'");
-		new Actions(driver).clickAndHold(leftLevelScrollBtn).build().perform();
+		new Actions(driver).clickAndHold(leftLevelScrollButton)
+		                   .build()
+		                   .perform();
 		FluentWait<PhantomJSDriver> wait = new FluentWait<PhantomJSDriver>(driver).withTimeout(15, TimeUnit.SECONDS)
-				.pollingEvery(4, TimeUnit.SECONDS).ignoring(MoveTargetOutOfBoundsException.class);
-		WebElement firstLevel = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@level ='1']")));
+		                                                                          .pollingEvery(4, TimeUnit.SECONDS)
+		                                                                          .ignoring(
+		                                                                                  MoveTargetOutOfBoundsException.class);
+		wait.until(ExpectedConditions.elementToBeClickable(firstLevel));
 
-		new Actions(driver).release(leftLevelScrollBtn).build().perform();
-		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+		new Actions(driver).release(leftLevelScrollButton)
+		                   .build()
+		                   .perform();
 		firstLevel.click();
-		wait.until(ExpectedConditions
-				.presenceOfAllElementsLocatedBy(By.xpath("//li[@class='training level-current' and @level ='1']")));
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(THE_CURRENT_FIRST_LEVEL)));
 		LOG.info("finish 'setFirstLevel'");
 	}
 
 	public void pasteWalkthrough() {
 		LOG.info("start 'pasteWalkthrough'");
 		FluentWait<PhantomJSDriver> wait = new FluentWait<PhantomJSDriver>(driver).withTimeout(15, TimeUnit.SECONDS)
-				.pollingEvery(4, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+		                                                                          .pollingEvery(4, TimeUnit.SECONDS)
+		                                                                          .ignoring(
+		                                                                                  NoSuchElementException.class);
 		wait.until(ExpectedConditions.elementToBeClickable(field));
 		field.click();
 		textField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -95,16 +107,18 @@ public class GamePage {
 			while ((line = input.readLine()) != null) {
 				fileContents.append(line);
 			}
-		} catch (FileNotFoundException fe) {
+		}
+		catch (FileNotFoundException fe) {
 			System.err.println(fe);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			System.err.println(e);
 		}
 		return fileContents.toString();
 	}
 
 	public void logOut() {
-		logOutBtn.click();
+		logOutButton.click();
 	}
 
 }

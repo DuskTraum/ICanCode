@@ -49,13 +49,13 @@ public class GameTest {
 		driver.get(resource.getString("mainURL"));
 		gameService.loginToGame(account);
 		gamePage = new GamePage(driver);
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("d:\\before1.jpeg"),true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			FileUtils.copyFile(scrFile, new File("d:\\before1.jpeg"), true);
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 		gamePage.setFirstLevel();
 		LOG.info("finish 'gameLogin'");
 	}
@@ -65,17 +65,19 @@ public class GameTest {
 		LOG.info("start 'prepareGame'");
 		gamePage = new GamePage(driver);
 		gamePage.pasteWalkthrough();
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("d:\\pasteWalk.jpeg"),true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			FileUtils.copyFile(scrFile, new File("d:\\pasteWalk.jpeg"), true);
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-		} 
-		driver.navigate().refresh();
+		}
+		driver.navigate()
+		      .refresh();
 		try {
 			Thread.sleep(5000);
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -94,17 +96,17 @@ public class GameTest {
 		LOG.info("start 'pass2A'");
 		try {
 			Thread.sleep(15000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
+		}
+		catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("d:\\after1.jpeg"),true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			FileUtils.copyFile(scrFile, new File("d:\\after1.jpeg"), true);
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 		gamePage = new GamePage(driver);
 		gameService.passLvl();
 		LOG.info("finish 'pass2A'");
@@ -113,13 +115,13 @@ public class GameTest {
 	@Test(dependsOnMethods = "pass2A")
 	public void pass3A() {
 		LOG.info("start 'pass3A'");
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("d:\\after2.jpeg"),true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			FileUtils.copyFile(scrFile, new File("d:\\after2.jpeg"), true);
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 		gameService.passLvl();
 		LOG.info("finish 'pass3A'");
 	}

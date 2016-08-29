@@ -17,17 +17,20 @@ import com.epam.yuri_karpov.icancode.bo.Account;
 import junit.framework.Assert;
 
 public class SignUpPage {
+	private static final String GREETINGS_DONT_EXIST = "Greetings don't exist!";
+	private static final String CONNECTING_TO_ROBOT_MESSAGE = "//div[contains(text(), 'Connecting to Robot')]";
+	private static final String EMAIL_FIELD = "//input[@type = 'email']";
 	private PhantomJSDriver driver;
 	private static final Logger LOG = Logger.getLogger(SignUpPage.class);
 
-	@FindBy(xpath = "//input[@type = 'email']")
+	@FindBy(xpath = EMAIL_FIELD)
 	private WebElement loginInput;
 
 	@FindBy(xpath = "//input[@type = 'password']")
 	private WebElement passwordInput;
 
 	@FindBy(xpath = "//button[@id='submit-button']")
-	private WebElement submitBtn;
+	private WebElement submitButton;
 
 	public SignUpPage(PhantomJSDriver driver) {
 		this.driver = driver;
@@ -38,8 +41,10 @@ public class SignUpPage {
 		LOG.info("start 'setLogin'");
 		LOG.info("Login:" + account.getLogin());
 		FluentWait<PhantomJSDriver> wait = new FluentWait<PhantomJSDriver>(driver).withTimeout(15, TimeUnit.SECONDS)
-				.pollingEvery(3, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type = 'email']")));
+		                                                                          .pollingEvery(3, TimeUnit.SECONDS)
+		                                                                          .ignoring(
+		                                                                                  NoSuchElementException.class);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(EMAIL_FIELD)));
 		loginInput.sendKeys(account.getLogin());
 		LOG.info("finish 'setLogin'");
 		return this;
@@ -54,11 +59,14 @@ public class SignUpPage {
 
 	public GamePage signIn() {
 		LOG.info("start 'signIn'");
-		submitBtn.click();
+		submitButton.click();
 		FluentWait<PhantomJSDriver> wait = new FluentWait<PhantomJSDriver>(driver).withTimeout(15, TimeUnit.SECONDS)
-				.pollingEvery(3, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
-		WebElement greetings = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(), 'Connecting to Robot')]")));
-		Assert.assertTrue("Greetings don't exist!", greetings.isDisplayed());
+		                                                                          .pollingEvery(3, TimeUnit.SECONDS)
+		                                                                          .ignoring(
+		                                                                                  NoSuchElementException.class);
+		WebElement greetings = wait.until(
+		        ExpectedConditions.presenceOfElementLocated(By.xpath(CONNECTING_TO_ROBOT_MESSAGE)));
+		Assert.assertTrue(GREETINGS_DONT_EXIST, greetings.isDisplayed());
 		LOG.info("finish 'signIn'");
 		return new GamePage(this.driver);
 	}

@@ -1,6 +1,5 @@
 package com.epam.yuri_karpov.icancode.service;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import com.epam.yuri_karpov.icancode.bo.Account;
@@ -21,13 +20,13 @@ public class GameService {
 		signUp.setPassword(account);
 		signUp.signIn();
 	}
-	
-	public void logOut(){
+
+	public void logOut() {
 		GamePage gamePage = new GamePage(driver);
 		gamePage.logOut();
 	}
-	
-	public void passLvl(){
+
+	public void passLvl() {
 		GamePage gamePage = new GamePage(driver);
 		gamePage.passLevel();
 	}

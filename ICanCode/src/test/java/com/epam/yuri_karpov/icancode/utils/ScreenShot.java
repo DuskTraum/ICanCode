@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 
 public class ScreenShot {
 
+	private static final String ERROR_WHEN_TRYING_TO_MAKE_A_SCREENSHOT = "Error when trying to make a screenshot ";
+	private static final String CANNOT_DELETE_FILE = "Cannot delete file ";
 	private static final String PATH_TO_REPORT = "test-output/html/";
 	private static final String SCREENSHOTS_FOLDER = "screenshots";
 	private static final Logger LOG = Logger.getLogger(ScreenShot.class);
@@ -21,7 +23,7 @@ public class ScreenShot {
 		if (files != null && files.length > 0) {
 			for (File file : files) {
 				if (!file.delete()) {
-					LOG.warn("Cannot delete file " + file);
+					LOG.warn(CANNOT_DELETE_FILE + file);
 				}
 			}
 		}
@@ -40,8 +42,9 @@ public class ScreenShot {
 			FileUtils.copyFileToDirectory(screenshot, new File(PATH_TO_REPORT + SCREENSHOTS_FOLDER));
 			String logMessage = "<a href='" + SCREENSHOTS_FOLDER + "/" + screenshot.getName() + "'>" + message + "</a>";
 			LOG.warn(logMessage);
-		} catch (Exception e) {
-			LOG.error("Error when trying to make a screenshot " + e);
+		}
+		catch (Exception e) {
+			LOG.error(ERROR_WHEN_TRYING_TO_MAKE_A_SCREENSHOT + e);
 			throw new RuntimeException(e);
 		}
 	}
